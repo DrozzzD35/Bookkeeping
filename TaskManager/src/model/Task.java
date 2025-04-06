@@ -3,12 +3,16 @@ package model;
 
 import utils.Identity;
 
+import java.util.List;
+import java.util.Map;
+
 public class Task {
     protected Integer id;
     protected String name;
     protected String description;
     protected Status status;
     protected Type type;
+
 
     public Task(String name, String description) {
         this.id = Identity.INSTANCE.generateId();
@@ -41,4 +45,6 @@ public class Task {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+
 }
