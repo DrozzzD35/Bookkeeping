@@ -24,22 +24,31 @@ public class Manager {
     }
 
     public Task findTask(int id) {
-        for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
-            if (entry.getKey() == id) {
-                return entry.getValue();
-            } else {
-                System.out.println("Задача не найдена. Возможно неверно указан идентификатор");
-                System.out.println();
+        if (!taskMap.isEmpty()) {
+            for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
+                if (entry.getKey() == id) {
+                    return entry.getValue();
+                } else {
+                    System.out.println("Задача не найдена. Возможно неверно указан идентификатор");
+                    System.out.println();
+                    break;
+                }
             }
+        } else {
+            System.out.println("В настоящий момент задач нет");
+            System.out.println();
         }
         return null;
     }
 
     public void removeTaskById(int id) {
-        taskMap.remove(id);
-        System.out.println("Задача удалена");
         printTask(id);
-        System.out.println();
+        Task task = findTask(id);
+        if (!(task == null)) {
+            taskMap.remove(id);
+            System.out.println("Задача удалена");
+            System.out.println();
+        }
 
     }
 
@@ -55,6 +64,7 @@ public class Manager {
     public void printAllTasks() {
         if (taskMap.isEmpty()) {
             System.out.println("В настоящий момент задач нет");
+            System.out.println();
         } else {
             for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
                 printTask(entry.getKey());
@@ -64,12 +74,14 @@ public class Manager {
 
     public void printTask(int id) {
         Task task = findTask(id);
-        System.out.println("Задача: " + task.getName());
-        System.out.println("Идентификатор: " + task.getId());
-        System.out.println("Описание: " + task.getDescription());
-        System.out.println("Статус: " + task.getStatus());
-        System.out.println("Тип: " + task.getType());
-        System.out.println();
+        if (!(task == null)) {
+            System.out.println("Задача: " + task.getName());
+            System.out.println("Идентификатор: " + task.getId());
+            System.out.println("Описание: " + task.getDescription());
+            System.out.println("Статус: " + task.getStatus());
+            System.out.println("Тип: " + task.getType());
+            System.out.println();
+        }
     }
 
     public void changeStatus(int id) {
@@ -86,11 +98,15 @@ public class Manager {
         task.description = description;
     }
 
-    public void updateTask(Task task) {
-        taskMap.put(task.id, task);
+    public void updateTask(int oldTask, Task newTask) {
+        Task deletTask = findTask(oldTask);
+        int id = deletTask.getId();
+        taskMap.remove(id);
+        taskMap.put(id, newTask);
     }
 
     public void printAllSubTaskByEpic(Epic task) {
+
     }
 }
 
