@@ -2,9 +2,6 @@ package model;
 
 import utils.Identity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SubTask extends Task {
 
     public SubTask(String name, String description) {
