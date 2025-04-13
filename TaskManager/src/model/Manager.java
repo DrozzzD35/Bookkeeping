@@ -1,12 +1,11 @@
 package model;
 
-import utils.Identity;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Manager {
     private Map<Integer, Task> taskMap = new HashMap<>();
+    ChangeStatus changeStatus = new ChangeStatus();
 
 
     public void crateTask(String name, String description) {
@@ -19,25 +18,29 @@ public class Manager {
         addTask(task);
     }
 
+    public void crateSubTask(String name, String description) {
+        SubTask task = new SubTask(name, description);
+        addTask(task);
+    }
+
     public Task findTask(int id) {
         for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
             if (entry.getKey() == id) {
                 return entry.getValue();
+            } else {
+                System.out.println("Задача не найдена. Возможно неверно указан идентификатор");
+                System.out.println();
             }
         }
-
         return null;
     }
 
     public void removeTaskById(int id) {
-        Task foundTask = findTask(id);
-        taskMap.remove(foundTask);
-        System.out.println("Задача " + foundTask.name + " удалена");
-        System.out.println("Идентификатор задачи: " + foundTask.id);
-        System.out.println("Описание: " + foundTask.description);
-        System.out.println("Статус: " + foundTask.status);
-        System.out.println("Тип: " + foundTask.type);
+        taskMap.remove(id);
+        System.out.println("Задача удалена");
+        printTask(id);
         System.out.println();
+
     }
 
     public void removeAllTask() {
@@ -50,14 +53,46 @@ public class Manager {
     }
 
     public void printAllTasks() {
-        for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
-            System.out.println("Задача: " + entry.getValue().name);
-            System.out.println("Идентификатор: " + entry.getKey());
-            System.out.println("Описание: " + entry.getValue().description);
-            System.out.println("Статус: " + entry.getValue().status);
-            System.out.println("Тип: " + entry.getValue().type);
-            System.out.println();
+        if (taskMap.isEmpty()) {
+            System.out.println("В настоящий момент задач нет");
+        } else {
+            for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
+                printTask(entry.getKey());
+            }
         }
     }
 
+    public void printTask(int id) {
+        Task task = findTask(id);
+        System.out.println("Задача: " + task.getName());
+        System.out.println("Идентификатор: " + task.getId());
+        System.out.println("Описание: " + task.getDescription());
+        System.out.println("Статус: " + task.getStatus());
+        System.out.println("Тип: " + task.getType());
+        System.out.println();
+    }
+
+    public void changeStatus(int id) {
+        Task task = findTask(id);
+        changeStatus.changeStatus(task);
+    }
+
+
+    public void updateName(Task task, String name) {
+        task.name = name;
+    }
+
+    public void updateDescription(Task task, String description) {
+        task.description = description;
+    }
+
+    public void updateTask(Task task) {
+        taskMap.put(task.id, task);
+    }
+
+    public void printAllSubTaskByEpic(Epic task) {
+    }
 }
+
+
+
