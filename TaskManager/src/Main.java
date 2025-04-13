@@ -55,14 +55,14 @@ public class Main {
 
                     break;
                 }
-                case 3: {
+                case 2: {
                     System.out.println("Введите идентификатор задачи для её удаления");
                     int id = scanner.nextInt();
                     manager.removeTaskById(id);
                     System.out.println();
                     break;
                 }
-                case 4: {
+                case 3: {
                     System.out.println("Вы уверены что хотите удалить все задачи?");
                     System.out.println("1. Да");
                     System.out.println("2. Нет");
@@ -78,19 +78,19 @@ public class Main {
 
                     break;
                 }
-                case 5: {
+                case 4: {
                     System.out.println("Введите идентификатор задачи для её поиска");
                     int id = scanner.nextInt();
                     manager.printTask(id);
                     System.out.println();
                     break;
                 }
-                case 6: {
+                case 5: {
                     manager.printAllTasks();
                     break;
 
                 }
-                case 7: {
+                case 6: {
 
                     System.out.println("Введите идентификатор задачи: ");
                     int id = scanner.nextInt();
@@ -126,6 +126,22 @@ public class Main {
                     }
                     break;
                 }
+                case 7: {
+                    System.out.println("Название новой задачи: ");
+                    String name = scanner.next();
+
+                    System.out.println("Описание новой задачи: ");
+                    String description = scanner.next();
+
+                    Task newTask = new Task(name, description);
+                    System.out.println("Задачи создана успешно");
+                    System.out.println("На какую задачу заменить, укажите идентификатор");
+                    int oldTask = scanner.nextInt();
+                    manager.updateTask(oldTask, newTask);
+                    System.out.println("Задача успешно заменена");
+                    System.out.println();
+                    break;
+                }
                 case 8: {
                     return;
                 }
@@ -145,11 +161,12 @@ public class Main {
     public static void printMenu() {
         System.out.println("Введите команду (1-6): ");
         System.out.println("1. Создать задачу");
-        System.out.println("3. Удалить задачу по идентификатору");
-        System.out.println("4. Удалить все задача");
-        System.out.println("5. Найти задачу");
-        System.out.println("6. Получение списка всех задач");
-        System.out.println("7. Изменить имя, описание или статус задачи");
+        System.out.println("2. Удалить задачу по идентификатору");
+        System.out.println("3. Удалить все задача");
+        System.out.println("4. Найти задачу");
+        System.out.println("5. Получение списка всех задач");
+        System.out.println("6. Изменить имя, описание или статус задачи");
+        System.out.println("7. Заменить задачу");
         System.out.println("8. Выход");
         System.out.println();
     }
