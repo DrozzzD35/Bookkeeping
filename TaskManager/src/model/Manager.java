@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class Manager {
     private Map<Integer, Task> taskMap = new HashMap<>();
-    ChangeStatus changeStatus = new ChangeStatus();
 
 
     public void crateTask(String name, String description) {
@@ -14,13 +13,17 @@ public class Manager {
     }
 
     public void crateEpic(String name, String description) {
-        Epic task = new Epic(name, description);
+        Task task = new Epic(name, description);
         addTask(task);
     }
 
-    public void crateSubTask(String name, String description) {
-        SubTask task = new SubTask(name, description);
-        addTask(task);
+    public void crateSubTask(String name, String description, int idEpic) {
+        if (!(findTask(idEpic) == null)) {
+            Task task = new SubTask(name, description, idEpic);
+            addTask(task);
+        } else {
+            System.out.println("Большая задача не найдена");
+        }
     }
 
     public Task findTask(int id) {
@@ -67,7 +70,12 @@ public class Manager {
             System.out.println();
         } else {
             for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
-                printTask(entry.getKey());
+                System.out.println("Задача: " + entry.getValue().getName());
+                System.out.println("Идентификатор: " + entry.getValue().getId());
+                System.out.println("Описание: " + entry.getValue().getDescription());
+                System.out.println("Статус: " + entry.getValue().getStatus());
+                System.out.println("Тип: " + entry.getValue().getType());
+                System.out.println();
             }
         }
     }
@@ -85,6 +93,7 @@ public class Manager {
     }
 
     public void changeStatus(int id) {
+        ChangeStatus changeStatus = new ChangeStatus();
         Task task = findTask(id);
         changeStatus.changeStatus(task);
     }
@@ -105,8 +114,28 @@ public class Manager {
         taskMap.put(id, newTask);
     }
 
-    public void printAllSubTaskByEpic(Epic task) {
+    public void printAllEpic() {
+        for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
+            if (entry.getValue().type == Type.EPIC) {
+                System.out.println("Задача: " + entry.getValue().getName());
+                System.out.println("Идентификатор: " + entry.getValue().getId());
+                System.out.println("Описание: " + entry.getValue().getDescription());
+                System.out.println("Статус: " + entry.getValue().getStatus());
+                System.out.println("Тип: " + entry.getValue().getType());
+                System.out.println();
+            }
+        }
+    }
 
+    public void printAllSubTaskByEpic(int idEpic) {
+        if (!(findTask(idEpic) == null)) {
+            for (Map.Entry<Integer, Task> entry : taskMap.entrySet()) {
+                if (entry.getValue().type == Type.SUBTASK) {
+
+                }
+
+            }
+        }
     }
 }
 
