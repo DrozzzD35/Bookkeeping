@@ -2,7 +2,7 @@ package model;
 
 public enum Status {
     NEW("Новая задача"),
-    IN_PROGRESS("В процессе выполнения"),
+    IN_PROGRESS("Над задачей ведётся работа"),
     DONE("Задача завершена");
 
     private String status;
