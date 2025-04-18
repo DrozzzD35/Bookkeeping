@@ -10,6 +10,5 @@ public class Epic extends Task {
         this.id = Identity.INSTANCE.generateId() - 1;
         this.type = Type.EPIC;
         this.status = Status.NEW;
-//        SubTask subTask = new SubTask(nameSubTask, descriptionSubTask);
     }
 }

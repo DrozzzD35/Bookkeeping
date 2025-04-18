@@ -3,12 +3,12 @@ package model;
 public class ChangeStatus {
 
     public void changeStatus(Task task) {
-        if (task.status == Status.NEW) {
+        if (task.getStatus() == Status.NEW) {
             System.out.println("Началась работа над задачей " + task.getName());
             task.setStatus(Status.IN_PROGRESS);
             System.out.println("Статус задачи изменён на: " + Status.IN_PROGRESS);
             System.out.println();
-        } else if (task.status == Status.IN_PROGRESS) {
+        } else if (task.getStatus() == Status.IN_PROGRESS) {
             task.setStatus(Status.DONE);
             System.out.println("Задача " + task.getName() + " завершена");
             System.out.println("Статус задачи изменён на: " + Status.DONE);
