@@ -40,15 +40,23 @@ public class Main {
                         System.out.println("Большая задачи создана успешно");
                         System.out.println();
                     } else if (answer == 3) {
-                        System.out.println("Название задачи: ");
-                        String name = scanner.next();
+                        System.out.println("В какую большую задачу входит подзадача, укажите идентификатор");
+                        manager.printAllEpic();
+                        int idEpic = scanner.nextInt();
+                        if (!(manager.findTask(idEpic) == null)) {
+                            manager.printTask(idEpic);
+                            System.out.println("Название задачи: ");
+                            String name = scanner.next();
 
-                        System.out.println("Описание задачи: ");
-                        String description = scanner.next();
+                            System.out.println("Описание задачи: ");
+                            String description = scanner.next();
 
-                        manager.crateSubTask(name, description);
-                        System.out.println("Подзадачи создана успешно");
-                        System.out.println();
+                            manager.crateSubTask(name, description, idEpic);
+                            System.out.println("Подзадачи создана успешно");
+                            System.out.println();
+                        } else {
+                            break;
+                        }
                     } else {
                         System.out.println("Неверно указана команда");
                     }
@@ -88,7 +96,6 @@ public class Main {
                 case 5: {
                     manager.printAllTasks();
                     break;
-
                 }
                 case 6: {
 
