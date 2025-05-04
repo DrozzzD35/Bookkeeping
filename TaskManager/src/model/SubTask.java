@@ -1,21 +1,17 @@
 package model;
 
-import utils.Identity;
-
 public class SubTask extends Task {
-    private int idEpic;
+    private Epic parent;
 
-    public SubTask(String name, String description, int idEpic) {
-        super(name, description);
-        this.id = Identity.INSTANCE.generateId();
-        this.status = Status.NEW;
+    public SubTask(String name, String description, Epic parent) {
+        super(name, description); // new Task(name, description);
+
         this.type = Type.SUBTASK;
-        this.idEpic = idEpic;
+        this.parent = parent;
 
     }
 
-    public int getIdEpic() {
-        return idEpic;
+    public Epic getParent() {
+        return parent;
     }
-
 }
