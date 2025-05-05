@@ -8,11 +8,12 @@ import java.util.Map;
 
 public class Task {
     protected Integer id;
+
     protected String name;
+
     protected String description;
     protected Status status;
     protected Type type;
-
 
     public Task(String name, String description) {
         this.id = Identity.INSTANCE.generateId();
@@ -20,6 +21,10 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
         this.type = Type.TASK;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getId() {

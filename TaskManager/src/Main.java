@@ -1,4 +1,4 @@
-import model.Manager;
+import service.Manager;
 import model.Task;
 
 import java.util.Scanner;

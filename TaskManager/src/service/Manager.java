@@ -1,10 +1,18 @@
-package model;
+package service;
 
+import model.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Manager {
-    private Map<Integer, Task> taskMap = new HashMap<>();
+public class Manager<T extends Task> implements TaskManager<T> {
+    private Map<Integer, T> taskMap;
+
+    public Manager() {
+        this.taskMap = new HashMap<>();
+    }
 
 
     public void crateTask(String name, String description) {
@@ -17,14 +25,14 @@ public class Manager {
         addTask(task);
     }
 
-    public void crateSubTask(String name, String description, int idEpic) {
-        if (!(findTask(idEpic) == null)) {
-            Task task = new SubTask(name, description, idEpic);
-            addTask(task);
-        } else {
-            System.out.println("Большая задача не найдена");
-        }
-    }
+//    public void crateSubTask(String name, String description, int idEpic) {
+//        if (!(findTask(idEpic) == null)) {
+//            Task task = new SubTask(name, description, idEpic);
+//            addTask(task);
+//        } else {
+//            System.out.println("Большая задача не найдена");
+//        }
+//    }
 
     public Task findTask(int id) {
         if (!taskMap.isEmpty()) {
@@ -44,6 +52,50 @@ public class Manager {
         return null;
     }
 
+    @Override
+    public void add(T task) {
+        if (task instanceof SubTask) {
+            ((SubTask) task).getParent().addChild((SubTask) task);
+        }
+
+        taskMap.put(task.getId(), task);
+        System.out.println(task.getType() + " " + task.getName() + " добавлен.");
+    }
+
+    @Override
+    public List<T> getTasks() {
+        return new ArrayList<>(taskMap.values());
+
+//        List<T> tasks = new ArrayList<>();
+//        for (Map.Entry<Integer, T> entry : taskMap.entrySet()) {
+//            tasks.add(entry.getValue());
+//        }
+//        return tasks;
+    }
+
+    @Override
+    public T getTaskById(int id) {
+//        for (Map.Entry<Integer, T> entry : taskMap.entrySet()) {
+//            if (entry.getKey() == id) {
+//                return entry.getValue();
+//            }
+//        }
+//
+//        return null;
+
+
+        if(!taskMap.containsKey(id)){
+            System.out.println("Задача с таким id не найдена: " + id);
+            return null;
+        }
+        return taskMap.get(id);
+    }
+
+    @Override
+    public void updateTask(T task) {
+
+    }
+
     public void removeTaskById(int id) {
         printTask(id);
         Task task = findTask(id);
@@ -55,9 +107,23 @@ public class Manager {
 
     }
 
-    public void removeAllTask() {
+    @Override
+    public void removeAllTasks() {
         taskMap.clear();
+        System.out.println("Все задачи удалены");
     }
+
+    @Override
+    public List<SubTask> getAllSubtasksByEpicId(int epicId) {
+        if (!taskMap.containsKey(epicId)){
+            System.out.println("Большая задача не найдена");
+            return new ArrayList<>();
+        }
+
+        return ((Epic)taskMap.get(epicId)).getAllChildren();
+    }
+
+
 
 
     public Task addTask(Task task) {
@@ -100,7 +166,7 @@ public class Manager {
 
 
     public void updateName(Task task, String name) {
-        task.name = name;
+        task.setName(name);
     }
 
     public void updateDescription(Task task, String description) {
