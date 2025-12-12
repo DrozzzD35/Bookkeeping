@@ -173,7 +173,7 @@ public class Manager {
         List<String> fileNames = new ArrayList<>();
         String nameStartWith = type == ReportType.MONTHLY ? "m." : "y.";
         try {
-            fileNames = Files.walk(Paths.get("./resources"))
+            fileNames = Files.walk(Paths.get("Bookkeeping/resources"))
                     .filter(pathName -> {
                         String path = pathName.toString().toLowerCase(Locale.ROOT);
                         return (path.contains(nameStartWith)) && path.endsWith(".csv");

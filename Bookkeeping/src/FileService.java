@@ -7,7 +7,7 @@ import java.util.List;
 public class FileService {
 
     public static List<String> readFile(String fileName) {
-        String path = "./resources/" + fileName;
+        String path = "Bookkeeping/resources/" + fileName;
         try {
             return new ArrayList<>(Files.readAllLines(Path.of(path)));
         } catch (IOException e) {
